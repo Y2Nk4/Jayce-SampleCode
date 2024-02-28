@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      # uri: mongodb+srv://<username>:<pwd>@<cluster>.mongodb.net/qa-community
+      uri: mongodb://localhost:27017/qa-community
+      database: qa-community
+
+server:
+  port : 8081

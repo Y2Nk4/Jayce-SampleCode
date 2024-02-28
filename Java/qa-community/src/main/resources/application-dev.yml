@@ -1,0 +1,11 @@
+jwt-key: as23kdo-93s^o2ke.23reejs9m
+jwt-issuer: QA-COMMUNITY
+
+springdoc:
+  api-docs:
+    path: /_private/api-docs
+  swagger-ui:
+    enabled: true
+    path: /_private/swagger-ui.html
+  packages-to-scan:
+    - com.wenda.demo.controllers
