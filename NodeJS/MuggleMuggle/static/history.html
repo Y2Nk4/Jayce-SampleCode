@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./styles.css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=UnifrakturMaguntia|PT+Serif"/>
+    <title>MuggleMuggle Auction House</title>
+</head>
+<body>
+    <div id="app">
+        <a href="/">
+            <div class="web-header">
+                <div class="upper"></div>
+                <h2>MuggleMuggle Auction House</h2>
+                <div class="lower"></div>
+            </div>
+        </a>
+
+        <div class="navbar">
+            <div>
+                <a href="/">All</a> |
+                <a href="/">Epic Deals</a> |
+                <a href="/">Best Seller</a> |
+                <a href="/">Back to Hogwarts</a>
+            </div>
+            <div >
+                Welcome, {{ userInfo.firstname }} {{ userInfo.lastname }} |
+                <a href="/addListing.html">Add Listing</a> |
+                <a href="/addAuction.html">New Auction</a> |
+                <a href="/Profile.html">Account</a> |
+                <a href="/cart.html">Shopping Cart</a> |
+                <a @click="userLogout">Logout</a>
+            </div>
+        </div>
+
+        <div style="display:inline-block; float: left; position: relative; right: -150px">
+            <img style="width: 100px; height: 100px" src="https://thumbs.gfycat.com/DetailedUntidyAmericanindianhorse-size_restricted.gif">
+        </div>
+        <div style="display:inline-block; float: right; position: relative; left: -150px">
+            <img style="width: 100px; height: 100px" src="https://thumbs.gfycat.com/DetailedUntidyAmericanindianhorse-size_restricted.gif">
+        </div>
+        <div>
+            <h3 class="sale-title title-font">Purchases</h3>
+        </div>
+
+        <div class="listings">
+            <div class="items" v-for="item in purchaseRecord">
+                <div style="height: 200px; width: 200px"><img style="width:190px;height:190px;display:flex;margin-left:auto;margin-right:auto;margin-top:2%" :src="item.image" alt=""></div>
+                <div style="width: 100%; text-align: center;">
+                    <div class="item-type">
+                        <h3 v-html="item.name"></h3>
+                    </div>
+                    <span style="display: block">Amount: $ {{ item.amount }}</span>
+                    <span style="display: block">Total: $ {{ item.price }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:inline-block; float: left; position: relative; right: -150px">
+            <img style="width: 90px; height: 90px" src="https://media0.giphy.com/media/j27qcc2ZOcvmOr80Ns/giphy.gif?cid=6c09b952b234fecf5ba2cceab3be56106f228cd40a4afaaf&rid=giphy.gif&ct=s">
+        </div>
+        <div style="display:inline-block; float: right; position: relative; left: -150px">
+            <img style="width: 90px; height: 90px" src="https://media0.giphy.com/media/j27qcc2ZOcvmOr80Ns/giphy.gif?cid=6c09b952b234fecf5ba2cceab3be56106f228cd40a4afaaf&rid=giphy.gif&ct=s">
+        </div>
+        <div>
+            <h3 class="sale-title title-font">Sold</h3>
+        </div>
+        <div class="listings">
+            <div class="items" v-for="item in sellingRecord">
+                <div style="height: 200px; width: 200px"><img :src="item.image" style="width:190px;height:190px;display:flex;margin-left:auto;margin-right:auto;margin-top:2%" alt=""></div>
+                <div style="width: 100%; text-align: center;">
+                    <div class="item-type">
+                        <h3 v-html="item.name"></h3>
+                    </div>
+                    <span style="display: block">Amount: $ {{ item.amount }}</span>
+                    <span style="display: block">Total: $ {{ item.price }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script src="home.js"></script>
+<script src="common.js"></script>
+<script src="vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/updateLocale.js"></script>
+<script>
+    dayjs.extend(window.dayjs_plugin_relativeTime, {
+        thresholds: [
+            { l: 's', r: 1 },
+            { l: 'm', r: 1 },
+            { l: 'mm', r: 59, d: 'minute' },
+            { l: 'h', r: 1 },
+            { l: 'hh', r: 23, d: 'hour' },
+            { l: 'd', r: 1 },
+            { l: 'dd', r: 29, d: 'day' },
+            { l: 'M', r: 1 },
+            { l: 'MM', r: 11, d: 'month' },
+            { l: 'y' },
+            { l: 'yy', d: 'year' }
+        ]
+    })
+    dayjs.extend(window.dayjs_plugin_updateLocale)
+    dayjs.updateLocale('en', {
+        relativeTime: {
+            future: "Only %s Left",
+            past: "Ended %s Ago",
+            s: '%d seconds',
+            ss: '%d seconds',
+            m: "%d minute",
+            mm: "%d minutes",
+            h: "%d hour",
+            hh: "%d hours",
+            d: "%d day",
+            dd: "%d days",
+            M: "%d month",
+            MM: "%d months",
+            y: "%d year",
+            yy: "%d years"
+        }
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            userLoggedIn: false,
+            userInfo: {},
+            sellingRecord: [],
+            purchaseRecord: [],
+            auctions: []
+        },
+
+        methods: {
+            async fetchSellingRecord() {
+                let resp = await fetch('/api/user/sellingRecord', {
+                    method: 'GET'
+                }).catch((error) => {
+                    console.log(error)
+                })
+                let result = await resp.json();
+                if (result && result.success) {
+                    this.sellingRecord = result.data
+                }
+            },
+            async fetchPurchaseRecord() {
+                let resp = await fetch('/api/user/purchaseRecord', {
+                    method: 'GET'
+                }).catch((error) => {
+                    console.log(error)
+                })
+                let result = await resp.json();
+                if (result && result.success) {
+                    this.purchaseRecord = result.data
+                }
+            },
+            async userLogout() {
+                console.log('user logged out')
+                let resp = await fetch('/api/auth/logout', {
+                    method: 'POST'
+                }).catch((error) => {
+                    console.log(error)
+                })
+                window.location = '/'
+            }
+        },
+
+        async mounted(){
+            let { userLoggedIn, userInfo } = await fetchUserInfo()
+            this.userLoggedIn = userLoggedIn
+            this.userInfo = userInfo
+            this.fetchSellingRecord()
+            this.fetchPurchaseRecord()
+        }
+    });
+</script>
+
+<style>
+.navbar{
+    padding: 0 100px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+</style>

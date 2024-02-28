@@ -1,0 +1,9 @@
+export default {
+  SHIPPING: 0,
+  BILLING: 1,
+  BOTH_SHIPPING_AND_BILLING: 2,
+
+  0: 'SHIPPING',
+  1: 'BILLING',
+  2: 'BOTH_SHIPPING_AND_BILLING'
+}

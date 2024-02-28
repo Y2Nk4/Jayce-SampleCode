@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:4.2.5
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+
+  web:
+    build: .
+    environment:
+      WAIT_HOSTS: mongo:27017
+      DB: mongo:27017
+    ports:
+      - "8080:8080"

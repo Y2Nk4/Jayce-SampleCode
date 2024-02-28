@@ -1,0 +1,31 @@
+{
+  "name": "mugglemuggle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "y2nk4-local-run": "export DB=\"root:root@localhost\"; node main.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Y2Nk4/MuggleMuggle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Y2Nk4/MuggleMuggle/issues"
+  },
+  "homepage": "https://github.com/Y2Nk4/MuggleMuggle#readme",
+  "dependencies": {
+    "@koa/router": "^12.0.0",
+    "dayjs": "^1.11.6",
+    "koa": "^2.13.4",
+    "koa-body": "^5.0.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-session": "^6.2.0",
+    "koa-websocket": "^7.0.0",
+    "mime-types": "^2.1.35",
+    "mongodb": "^4.10.0"
+  }
+}

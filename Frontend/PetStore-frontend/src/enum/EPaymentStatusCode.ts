@@ -1,0 +1,21 @@
+export default {
+  NotPaid: 0,
+  Submitted: 1,
+  Paid: 2,
+  Refunded: 3,
+  Processing: 4,
+  Dispute: 5,
+  Cancelled: 6,
+  Failed: 7,
+  ActionRequired: 8,
+
+  0: 'NotPaid',
+  1: 'Submitted',
+  2: 'Paid',
+  3: 'Refunded',
+  4: 'Processing',
+  5: 'Dispute',
+  6: 'Cancelled',
+  7: 'Failed',
+  8: 'ActionRequired',
+}

@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": "..",
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "PetStore-frontend/src/**/*.ts",
+    "PetStore-frontend/src/**/*.tsx",
+    "PetStore-frontend/src/**/*.vue",
+    "PetStore-frontend/tests/**/*.ts",
+    "PetStore-frontend/tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
